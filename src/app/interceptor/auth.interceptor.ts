@@ -17,22 +17,17 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let authReq = req;
     let token = this.authService.getToken();
+    // console.log("call intercepter", token)
     if (token) {
       authReq = req.clone({ headers: req.headers.set("token", token) });
+      console.log();
     }
     return next.handle(authReq).pipe(
       catchError((error) => {
         if (error.status === 401) {
           localStorage.removeItem(SETTINGS.TOKEN_KEY);
           localStorage.removeItem(SETTINGS.USER_DETAILS);
-          const currentUrl = this.router.url;
-          if (currentUrl) {
-            this.router.navigate(["/login"], {
-              queryParams: { redirectTo: currentUrl },
-            });
-          } else {
-            this.router.navigate(["/login"]);
-          }
+          this.router.navigate(["/login"]);
         }
         return throwError(() => error);
       })

@@ -118,6 +118,18 @@
     font-size: 0.9rem;
 }
 
+.toggle-password svg {
+    cursor: pointer;
+    fill: #666;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 500px;
+    right: 670px;
+    cursor: pointer;
+}
+
 .login-button {
     width: 100%;
     padding: 1rem;

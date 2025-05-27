@@ -1,0 +1,118 @@
+.flight-search-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+
+    .search-header {
+        text-align: center;
+        margin-bottom: 2rem;
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+    }
+
+    .search-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+        margin-bottom: 2rem;
+
+        .search-fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+
+            .form-group {
+                label {
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    color: #34495e;
+                    font-weight: 500;
+                }
+
+                input {
+                    width: 100%;
+                    padding: 0.75rem;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    font-size: 1rem;
+                    transition: border-color 0.3s;
+
+                    &:focus {
+                        outline: none;
+                        border-color: #3498db;
+                    }
+                }
+            }
+        }
+
+        .search-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+
+            button {
+                padding: 0.75rem 1.5rem;
+                border: none;
+                border-radius: 4px;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+
+            .search-button {
+                background-color: #3498db;
+                color: white;
+
+                &:hover {
+                    background-color: #2980b9;
+                }
+
+                &:disabled {
+                    background-color: #bdc3c7;
+                    cursor: not-allowed;
+                }
+            }
+
+            .clear-button {
+                background-color: #f1f1f1;
+                color: #34495e;
+
+                &:hover {
+                    background-color: #e0e0e0;
+                }
+            }
+        }
+    }
+
+    .results-container {
+        .results-header {
+            margin-bottom: 1.5rem;
+            text-align: center;
+
+            h2 {
+                color: #2c3e50;
+                margin-bottom: 0.5rem;
+            }
+
+            p {
+                color: #7f8c8d;
+            }
+        }
+
+        .flight-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+    }
+}

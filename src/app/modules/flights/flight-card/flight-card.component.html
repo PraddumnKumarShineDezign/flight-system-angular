@@ -1,0 +1,39 @@
+<div class="flight-card">
+    <div class="flight-header">
+        <div class="airline-info">
+            <img [src]="flight.airlineLogo" [alt]="flight.airline" class="airline-logo">
+            <span class="airline-name">{{ flight.airline }}</span>
+            <span class="flight-number">{{ flight.flightNumber }}</span>
+        </div>
+        <div class="flight-price">
+            <span class="price">{{ flight.price }}</span> <!--| currency -->
+            <span class="price-description">per passenger</span>
+        </div>
+    </div>
+
+    <div class="flight-details">
+        <div class="departure">
+            <div class="time">{{ flight.departureTime }}</div>
+            <div class="airport">{{ flight.origin }}</div>
+        </div>
+
+        <div class="duration">
+            <div class="line">
+                <span class="dot"></span>
+                <span class="line-connector"></span>
+                <span class="dot"></span>
+            </div>
+            <div class="duration-text">{{ flight.duration }}</div>
+        </div>
+
+        <div class="arrival">
+            <div class="time">{{ flight.arrivalTime }}</div>
+            <div class="airport">{{ flight.destination }}</div>
+        </div>
+    </div>
+
+    <div class="flight-footer">
+        <button class="book-button">Book Now</button>
+        <button class="details-button">Flight Details</button>
+    </div>
+</div>

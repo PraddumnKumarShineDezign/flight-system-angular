@@ -45,4 +45,16 @@ export class CommonService {
   setKeyToLS(key: string, value: string) {
     localStorage.setItem(key, value);
   }
-}
+  dateFormat(date: string) {
+    if (date) {
+      const startDate = new Date(date);
+      startDate.setHours(0, 0, 0, 0);
+
+      const endDate = new Date(date);
+      endDate.setHours(23, 59, 59, 999);
+
+      return { startDate, endDate };
+    }
+    return null;
+  }
+}  

@@ -1,4 +1,4 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -7,10 +7,11 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxUiLoaderConfig, NgxUiLoaderModule, PB_DIRECTION, POSITION, SPINNER } from 'ngx-ui-loader';
 import { environment } from '../environments/environment';
-import { AppComponent } from './app.component';
+
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { CommonModule } from '@angular/common';
 
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -26,13 +27,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
 };
 @NgModule({
     declarations: [
-        AppComponent
     ],
     imports: [
+        CommonModule,
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientModule,
         ToastrModule.forRoot({
             preventDuplicates: true,
             positionClass: 'toast-top-right'
@@ -42,10 +42,19 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         NgxSpinnerModule,
         BrowserAnimationsModule,
     ],
+    exports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgbModule,
+        NgxSpinnerModule,
+        BrowserAnimationsModule,
+        ToastrModule,
+        NgxUiLoaderModule,
+    ],
     providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: 'baseURL', useValue: environment.baseURL },
     ],
-    bootstrap: [AppComponent]
 })
 export class AppModule { }
