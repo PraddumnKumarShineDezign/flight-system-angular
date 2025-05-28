@@ -1,0 +1,48 @@
+{
+    "project": "Flight Booking Angular Frontend",
+    "description": "Setup instructions for the Angular frontend project of the Flight Booking System.",
+    "prerequisites": [
+        "Node.js (v18 or above) installed",
+        "Angular CLI installed globally (npm install -g @angular/cli)",
+        "Internet connection to download dependencies"
+    ],
+    "steps": [
+        {
+            "step": 1,
+            "title": "Clone the Angular project repository",
+            "command": "git clone https://github.com/PraddumnKumarShineDezign/flight-system-angular.git",
+            "note": "Change the URL if your Angular frontend repo URL is different"
+        },
+        {
+            "step": 2,
+            "title": "Navigate to the project directory",
+            "command": "cd flight-system-angular"
+        },
+        {
+            "step": 3,
+            "title": "Install project dependencies",
+            "command": "npm install",
+            "note": "This will install all packages listed in package.json"
+        },
+        {
+            "step": 4,
+            "title": "Run the Angular development server",
+            "command": "ng serve",
+            "note": "By default, the app runs on http://localhost:4200/"
+        },
+        {
+            "step": 5,
+            "title": "Open the application in a browser",
+            "instruction": "Go to http://localhost:4200/ to view the Angular application"
+        }
+    ],
+    "notes": [
+        "Ensure the backend API is running and accessible by the Angular app (check environment.ts for API base URL).",
+        "Use Angular CLI commands for generating components, services, and other files as needed.",
+        "If you face issues with permission or npm install, try clearing npm cache or using a Node version manager."
+    ],
+    "links": {
+        "Angular CLI": "https://angular.io/cli",
+        "Project GitHub Repository": " https: //github.com/PraddumnKumarShineDezign/flight-system-angular"
+    }
+}
