@@ -7,18 +7,6 @@ import { AppModule } from './shared.module';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 
-// export const appConfig: ApplicationConfig = {
-//     providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]
-// };
-
-// export const appConfig: ApplicationConfig = {
-//     providers: [
-//         importProvidersFrom(AppModule),
-//         provideHttpClient(),
-//         provideAnimations(),
-//         provideRouter(routes),
-//     ],
-// };
 export const appConfig: ApplicationConfig = {
     providers: [
         importProvidersFrom(AppModule),

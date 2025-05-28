@@ -1,0 +1,169 @@
+<div class="booking-container">
+    <div class="booking-header">
+        <h1>Book Your Flight</h1>
+        <p>Complete your booking by filling the form below</p>
+    </div>
+
+    <div class="booking-content">
+        <div class="flight-summary">
+            <h2>Flight Summary</h2>
+            <div class="summary-card">
+                <div class="airline-info">
+                    <img [src]="flight?.airlineLogo" [alt]="flight?.airline" class="airline-logo">
+                    <span class="airline-name">{{ flight?.airline }}</span>
+                    <span class="flight-number">{{ flight?.flightNumber }}</span>
+                </div>
+
+                <div class="route">
+                    <div class="departure">
+                        <div class="time">{{ flight.departureDateTime | date: 'HH:mm' }}</div>
+                        <div class="date">{{ flight.departureDateTime |date }}</div>
+                        <div class="airport">{{ flight?.origin }}</div>
+                    </div>
+
+                    <div class="duration">
+                        <div class="duration-text">{{ flight?.duration }}</div>
+                    </div>
+
+                    <div class="arrival">
+                        <div class="time">{{ flight.arrivalDateTime | date: 'HH:mm' }}</div>
+                        <div class="date">{{ flight.arrivalDateTime | date}}</div>
+                        <div class="airport">{{ flight?.destination }}</div>
+                    </div>
+                </div>
+
+                <div class="price-info">
+                    <div class="price-per-seat">
+                        <span>Price per seat:</span>
+                        <span>{{ flight?.price | currency:'USD':'symbol':'1.0-0' }}</span>
+                    </div>
+                    <div class="total-price">
+                        <span>Total:</span>
+                        <span>{{ (flight?.price || 0) * (bookingForm.value.seats || 1) | currency:'USD':'symbol':'1.0-0'
+                            }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="booking-form">
+            <div class="form-section">
+                <h2>Passenger Details</h2>
+                <div formGroupName="passengerDetails" class="form-grid">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" formControlName="firstName" placeholder="John">
+                        <div *ngIf="passengerDetails.get('firstName')?.invalid && passengerDetails.get('firstName')?.touched"
+                            class="error-message">
+                            first name is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" formControlName="lastName" placeholder="Doe">
+                        <div *ngIf="passengerDetails.get('lastName')?.invalid && passengerDetails.get('lastName')?.touched"
+                            class="error-message">
+                            last name is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" formControlName="email" placeholder="john.doe@example.com">
+                        <div *ngIf="passengerDetails.get('email')?.invalid && passengerDetails.get('email')?.touched"
+                            class="error-message">
+                            email is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" formControlName="phone" placeholder="1234567890">
+                        <div *ngIf="passengerDetails.get('phone')?.invalid && passengerDetails.get('phone')?.touched"
+                            class="error-message">
+                            10-digit phone number is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passport">Passport Number</label>
+                        <input type="text" id="passport" formControlName="passport" placeholder="A12345678">
+                        <div *ngIf="passengerDetails.get('passport')?.invalid && passengerDetails.get('passport')?.touched"
+                            class="error-message">
+                            Passport number is required
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Payment Details</h2>
+                <div formGroupName="paymentDetails" class="form-grid">
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method</label>
+                        <select id="paymentMethod" formControlName="paymentMethod">
+                            <option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" formControlName="cardNumber"
+                            placeholder="1234 5678 9012 3456">
+                        <div *ngIf="paymentDetails.get('cardNumber')?.invalid && paymentDetails.get('cardNumber')?.touched"
+                            class="error-message">
+                            16-digit card number is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expiryDate">Expiry Date</label>
+                        <input type="text" id="expiryDate" formControlName="expiryDate" placeholder="MM/YY">
+                        <div *ngIf="paymentDetails.get('expiryDate')?.invalid && paymentDetails.get('expiryDate')?.touched"
+                            class="error-message">
+                            Valid expiry date (MM/YY) is required
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" formControlName="cvv" placeholder="123">
+                        <div *ngIf="paymentDetails.get('cvv')?.invalid && paymentDetails.get('cvv')?.touched"
+                            class="error-message">
+                            3 or 4 digit CVV is required
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Booking Options</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="seats">Number of Seats</label>
+                        <input type="number" id="seats" formControlName="seats" min="1"
+                            max="flight?.seatsAvailable ?? null">
+                        <div *ngIf="bookingForm.get('seats')?.invalid && bookingForm.get('seats')?.touched"
+                            class="error-message">
+                            Must be between 1 and {{ flight?.seatsAvailable }}
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="specialRequests">Special Requests</label>
+                        <textarea id="specialRequests" formControlName="specialRequests" rows="3"
+                            placeholder="Dietary restrictions, wheelchair assistance, etc."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-button" [disabled]="bookingForm.invalid || isLoading">
+                    {{ isLoading ? 'Processing...' : 'Confirm Booking' }}
+                </button>
+                <button type="button" class="cancel-button" (click)="router.navigate(['/flight'])">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -17,7 +17,6 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const tokenExists = this.authService.hasToken();
-    // console.log("token extist", tokenExists)
     if (tokenExists) {
       return true;
     }

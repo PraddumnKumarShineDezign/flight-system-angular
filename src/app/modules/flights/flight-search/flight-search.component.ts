@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Flight } from '../../../interfaces/common.interface';
 import { ApiService } from '../../../services/api.service';
-import { RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FlightCardComponent } from '../flight-card/flight-card.component';
 import { CommonService } from '../../../services/common.service';
@@ -15,7 +15,7 @@ import { lastValueFrom } from 'rxjs';
   templateUrl: './flight-search.component.html',
   styleUrl: './flight-search.component.scss'
 })
-export class FlightSearchComponent {
+export class FlightSearchComponent implements OnInit {
   searchForm: FormGroup;
   flights: Flight[] = [];
   isLoading = false;
@@ -24,14 +24,20 @@ export class FlightSearchComponent {
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private router: Router
   ) {
     this.searchForm = this.fb.group({
       origin: [''],
       destination: [''],
       airline: [''],
-      departureDateTime: ['']
+      departureDateTime: [''],
+      numberOfPassengers: ['']
     });
+  }
+
+  ngOnInit(): void {
+    this.searchFlights();
   }
 
   // searchFlights() {
@@ -40,11 +46,16 @@ export class FlightSearchComponent {
   //     this.searchPerformed = true;
   //   }
   // }
+  goToMyBookings() {
+    this.router.navigate(['/flight/my/bookings']);
+  }
+
 
   clearSearch() {
     this.searchForm.reset();
     this.flights = [];
     this.searchPerformed = false;
+    this.searchFlights();
   }
 
   /**
@@ -56,11 +67,12 @@ export class FlightSearchComponent {
         ...this.searchForm.value
       }
       this.commonService.showSpinner();
+      this.searchPerformed = true;
       const res$ = this.apiService.postReq(API_PATH.F_LIST, data);
       let response: any = await lastValueFrom(res$);
       if (response && response.data) {
         this.flights = response.data?.flights;
-        console.log("flights", this.flights)
+        // console.log("flights", this.flights)
       }
       this.commonService.hideSpinner();
     } catch (error: any) {
@@ -71,6 +83,11 @@ export class FlightSearchComponent {
         this.commonService.showError(error.message);
       }
     }
+  }
+
+  openDatePicker(event: Event) {
+    const input = event.target as HTMLInputElement;
+    input.showPicker?.();
   }
 
 }

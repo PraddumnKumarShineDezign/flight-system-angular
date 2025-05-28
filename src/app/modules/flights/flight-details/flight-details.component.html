@@ -1,0 +1,60 @@
+<div class="flight-details-container">
+    <div class="flight-header">
+        <button class="back-button" (click)="router.navigate(['/flight'])">
+            ← Back to Flights
+        </button>
+        <h1>Flight Details</h1>
+    </div>
+
+    <div class="flight-content" *ngIf="!isLoading && flight">
+        <div class="flight-overview">
+            <div class="airline-info">
+                <img [src]="flight.airlineLogo" [alt]="flight.airline" class="airline-logo">
+                <div class="airline-text">
+                    <h2>{{ flight.airline }}</h2>
+                    <p>Flight {{ flight.flightNumber }}</p>
+                </div>
+            </div>
+
+            <div class="flight-route">
+                <div class="departure">
+                    <div class="time">{{ flight.departureDateTime | date: 'HH:mm' }}</div>
+                    <div class="date">{{ flight.departureDateTime |date }}</div>
+                    <div class="airport">{{ flight.origin }} </div>
+                </div>
+
+                <div class="duration">
+                    <div class="line">
+                        <span class="dot"></span>
+                        <span class="line-connector"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <div class="duration-text">{{ flight.duration }}</div>
+                </div>
+
+                <div class="arrival">
+                    <div class="time">{{ flight.arrivalDateTime | date: 'HH:mm' }}</div>
+                    <div class="date">{{ flight.arrivalDateTime | date}}</div>
+                    <div class="airport">{{ flight.destination }}</div>
+                </div>
+            </div>
+
+            <div class="flight-actions" *ngIf="flight.availableSeats > 0">
+                <div class="price">
+                    {{ flight.price | currency:'USD':'symbol':'1.0-0' }}
+                    <span class="price-description">per passenger</span>
+                </div>
+                <button class="book-button" (click)="bookFlight()">Book Now</button>
+            </div>
+            <div class="fully-booked" *ngIf="flight.availableSeats <= 0">
+                This flight is currently fully booked
+            </div>
+        </div>
+        <!--t-->
+    </div>
+
+    <div class="loading-spinner" *ngIf="isLoading">
+        <div class="spinner"></div>
+        <p>Loading flight details...</p>
+    </div>
+</div>

@@ -17,6 +17,22 @@
             color: #7f8c8d;
             font-size: 1.1rem;
         }
+
+        .my-bookings-btn {
+            margin-top: 1rem;
+            padding: 0.5rem 1.2rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .my-bookings-btn:hover {
+            background-color: #0056b3;
+        }
     }
 
     .search-card {

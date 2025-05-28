@@ -1,7 +1,10 @@
 <div class="flight-search-container">
     <div class="search-header">
         <h1>Find Your Perfect Flight</h1>
-        <p>Search across thousands of flights to find the best match for your journey</p>
+        <p>Search flights to find the best match for your journey</p>
+        <button class="my-bookings-btn" (click)="goToMyBookings()">
+            My Bookings
+        </button>
     </div>
 
     <div class="search-card">
@@ -24,7 +27,13 @@
 
                 <div class="form-group">
                     <label for="departureDateTime">Departure</label>
-                    <input type="datetime-local" id="departureDateTime" formControlName="departureDateTime">
+                    <input type="date" id="departureDateTime" formControlName="departureDateTime"
+                        (click)="openDatePicker($event)">
+                </div>
+                <div class=" form-group">
+                    <label for="numberOfPassengers">Number Of Passengers</label>
+                    <input type="number" id="numberOfPassengers" formControlName="numberOfPassengers"
+                        placeholder="Number Of Passengers">
                 </div>
             </div>
 

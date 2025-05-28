@@ -1,0 +1,114 @@
+<div class="bookings-container">
+    <div class="bookings-header">
+        <button class="back-button" (click)="router.navigate(['/flight'])">
+            ← Back to Flights
+        </button>
+        <h1>My Bookings</h1>
+        <p>Manage your upcoming trips and view past bookings</p>
+    </div>
+
+    <div class="bookings-controls">
+        <div class="filter-tabs">
+            <button class="filter-tab" [class.active]="activeFilter === 'all'" (click)="filterBookings('all')">
+                All Bookings
+            </button>
+            <button class="filter-tab" [class.active]="activeFilter === 'upcoming'"
+                (click)="filterBookings('upcoming')">
+                Upcoming
+            </button>
+            <button class="filter-tab" [class.active]="activeFilter === 'past'" (click)="filterBookings('past')">
+                Past Trips
+            </button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="applyFilters()"
+                placeholder="Search bookings..." (keyup.enter)="searchBookings()">
+            <button (click)="searchBookings()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="bookings-content">
+        <div *ngIf="isLoading" class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading your bookings...</p>
+        </div>
+
+        <div *ngIf="!isLoading && filteredBookings.length === 0" class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z" />
+            </svg>
+            <h3>No bookings found</h3>
+            <p *ngIf="activeFilter === 'all'">You don't have any bookings yet.</p>
+            <p *ngIf="activeFilter === 'upcoming'">You don't have any upcoming trips.</p>
+            <p *ngIf="activeFilter === 'past'">No past trips found.</p>
+            <button class="primary-button" routerLink="/flight">Book a Flight</button>
+        </div>
+
+        <div *ngIf="!isLoading && filteredBookings.length > 0" class="bookings-grid">
+            <div *ngFor="let booking of filteredBookings" class="booking-card">
+                <div class="booking-header">
+                    <div class="booking-reference">
+                        <span>Booking #{{ booking._id.slice(-6).toUpperCase() }}</span>
+                        <span class="status-badge" [class]="booking.status.toLowerCase()">{{ booking.status }}</span>
+                    </div>
+                    <div class="booking-date">
+                        {{ formatDate(booking.bookingDate) }}
+                    </div>
+                </div>
+
+                <div class="booking-content">
+                    <div class="flight-info">
+                        <div class="route">
+                            <div class="departure">
+                                <div class="airport">{{ booking.flight.origin }}</div>
+                            </div>
+                            <div class="duration">
+                                <div class="line">
+                                    <span class="dot"></span>
+                                    <span class="line-connector"></span>
+                                    <span class="dot"></span>
+                                </div>
+                            </div>
+                            <div class="arrival">
+                                <div class="airport">{{ booking.flight.destination }}</div>
+                            </div>
+                        </div>
+                        <div class="flight-number">
+                            Flight: {{ booking.flight.flightNumber }}
+                        </div>
+                    </div>
+
+                    <div class="booking-details">
+                        <div class="passengers">
+                            <div class="detail-item">
+                                <span class="label">Passenger:</span>
+                                <span class="value">{{ booking.passenger.firstName }} {{ booking.passenger.lastName
+                                    }}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Seats:</span>
+                                <span class="value">{{ booking.seats }}</span>
+                            </div>
+                        </div>
+                        <div class="price">
+                            <span class="label">Total Paid:</span>
+                            <span class="value">{{ booking.totalAmount | currency:'INR':'symbol':'1.0-0' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="booking-actions">
+                    <button class="action-button view-details" (click)="viewBookingDetails(booking._id)">
+                        View Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

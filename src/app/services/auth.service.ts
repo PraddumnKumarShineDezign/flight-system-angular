@@ -1,16 +1,12 @@
 import { Injectable } from "@angular/core";
 import * as Model from "../interfaces/common.interface";
 import * as CryptoJS from "crypto-js";
-import { BehaviorSubject, Subject } from "rxjs";
 import { SETTINGS } from "../constants/constants";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  private userNameChange = new Subject<string>();
-  public userNameChange$ = this.userNameChange.asObservable();
-
   constructor() { }
 
   /**
@@ -50,18 +46,7 @@ export class AuthService {
     localStorage.setItem(key, value);
   }
 
-  /**
-   * @description get username on change
-   */
-  getUserName() {
-    return this.userNameChange$;
-  }
-  /**
-   * @description set username on profile update
-   */
-  setUserName(userName: string) {
-    this.userNameChange.next(userName);
-  }
+
 
   /**
    * @description check if user has token

@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+// import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,7 +10,7 @@ import { environment } from '../environments/environment';
 
 
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { AuthInterceptor } from './interceptor/auth.interceptor';
+// import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { CommonModule } from '@angular/common';
 
 

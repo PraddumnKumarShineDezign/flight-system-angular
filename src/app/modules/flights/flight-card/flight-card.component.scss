@@ -149,4 +149,24 @@
             }
         }
     }
+
+    .seats-available {
+        font-size: 0.8rem;
+        margin-top: 0.3rem;
+        color: #27ae60;
+
+        &.no-seats {
+            color: #e74c3c;
+        }
+    }
+
+    .fully-booked {
+        text-align: center;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        color: #e74c3c;
+        margin-top: 1rem;
+        font-weight: 500;
+    }
 }

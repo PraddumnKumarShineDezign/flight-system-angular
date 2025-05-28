@@ -6,14 +6,17 @@
             <span class="flight-number">{{ flight.flightNumber }}</span>
         </div>
         <div class="flight-price">
-            <span class="price">{{ flight.price }}</span> <!--| currency -->
+            <span class="price">{{ flight.price | currency}}</span>
             <span class="price-description">per passenger</span>
+            <div class="seats-available" [class.no-seats]="!hasAvailableSeats()">
+                {{ hasAvailableSeats() ? flight.seatsAvailable + ' seats left' : 'Fully booked' }} </div>
         </div>
     </div>
 
     <div class="flight-details">
         <div class="departure">
-            <div class="time">{{ flight.departureTime }}</div>
+            <div class="time">{{ flight.departureDateTime | date: 'HH:mm' }}</div>
+            <div class="date">{{ flight.departureDateTime |date }}</div>
             <div class="airport">{{ flight.origin }}</div>
         </div>
 
@@ -27,13 +30,16 @@
         </div>
 
         <div class="arrival">
-            <div class="time">{{ flight.arrivalTime }}</div>
+            <div class="time">{{ flight.arrivalDateTime | date: 'HH:mm' }}</div>
+            <div class="date">{{ flight.arrivalDateTime | date}}</div>
             <div class="airport">{{ flight.destination }}</div>
         </div>
     </div>
 
-    <div class="flight-footer">
-        <button class="book-button">Book Now</button>
-        <button class="details-button">Flight Details</button>
+    <div class="flight-footer" *ngIf="hasAvailableSeats();">
+        <button class="book-button" (click)="bookFlight()">Book Now</button>
+        <button class="details-button" (click)="viewDetails()">Flight Details</button>
     </div>
+    <!-- <div class="seats-available" [class.no-seats]="!hasAvailableSeats()">
+        {{ getSeatsText() }}</div> -->
 </div>
